@@ -1,0 +1,5 @@
+<module>
+    <source path="parser">
+        <exclude name="**/server/**" />
+    </source>
+</module>
