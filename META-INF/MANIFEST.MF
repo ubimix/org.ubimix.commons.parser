@@ -4,12 +4,10 @@ Bundle-Name: Stream Tokenizer library.
 Bundle-SymbolicName: org.ubimix.commons.tokenizer
 Bundle-Version: 1.0.0
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Import-Package: org.ubimix.commons.tokenizer;version="1.0.0",
- org.ubimix.commons.tokenizer.base;version="1.0.0",
- org.ubimix.commons.tokenizer.json;version="1.0.0",
- org.ubimix.commons.tokenizer.stream;version="1.0.0",
- org.ubimix.commons.tokenizer.text;version="1.0.0",
- org.ubimix.commons.tokenizer.xml;version="1.0.0"
 Export-Package: org.ubimix.commons.parser;version="1.0.0",
+ org.ubimix.commons.parser.base;version="1.0.0",
+ org.ubimix.commons.parser.css;version="1.0.0",
  org.ubimix.commons.parser.json;version="1.0.0",
+ org.ubimix.commons.parser.stream;version="1.0.0",
+ org.ubimix.commons.parser.text;version="1.0.0",
  org.ubimix.commons.parser.xml;version="1.0.0"

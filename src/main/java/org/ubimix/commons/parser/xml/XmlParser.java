@@ -8,17 +8,17 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.ubimix.commons.parser.AbstractParser;
+import org.ubimix.commons.parser.ITokenizer;
+import org.ubimix.commons.parser.StreamToken;
 import org.ubimix.commons.parser.AbstractParser.IParserListener;
-import org.ubimix.commons.tokenizer.ITokenizer;
-import org.ubimix.commons.tokenizer.StreamToken;
-import org.ubimix.commons.tokenizer.text.TextDict;
-import org.ubimix.commons.tokenizer.xml.CDATAToken;
-import org.ubimix.commons.tokenizer.xml.CommentTokenizer.CommentToken;
-import org.ubimix.commons.tokenizer.xml.Entity;
-import org.ubimix.commons.tokenizer.xml.EntityToken;
-import org.ubimix.commons.tokenizer.xml.TagToken;
-import org.ubimix.commons.tokenizer.xml.XMLDict;
-import org.ubimix.commons.tokenizer.xml.XMLTokenizer;
+import org.ubimix.commons.parser.text.TextDict;
+import org.ubimix.commons.parser.xml.CDATAToken;
+import org.ubimix.commons.parser.xml.Entity;
+import org.ubimix.commons.parser.xml.EntityToken;
+import org.ubimix.commons.parser.xml.TagToken;
+import org.ubimix.commons.parser.xml.XMLDict;
+import org.ubimix.commons.parser.xml.XMLTokenizer;
+import org.ubimix.commons.parser.xml.CommentTokenizer.CommentToken;
 
 /**
  * @author kotelnikov

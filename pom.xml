@@ -12,11 +12,4 @@
     <packaging>bundle</packaging>
     <name>${project.artifactId}</name>
     <version>1.0.0</version>
-    <dependencies>
-        <dependency>
-            <groupId>org.ubimix.commons</groupId>
-            <artifactId>org.ubimix.commons.tokenizer</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-    </dependencies>
 </project>

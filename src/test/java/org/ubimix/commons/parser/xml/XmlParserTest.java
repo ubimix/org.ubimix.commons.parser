@@ -7,8 +7,8 @@ import java.util.Map;
 
 import junit.framework.TestCase;
 
-import org.ubimix.commons.tokenizer.CharStream;
-import org.ubimix.commons.tokenizer.xml.Entity;
+import org.ubimix.commons.parser.CharStream;
+import org.ubimix.commons.parser.xml.Entity;
 
 /**
  * @author kotelnikov

@@ -4,12 +4,12 @@
 package org.ubimix.commons.parser.json;
 
 import org.ubimix.commons.parser.AbstractParser;
+import org.ubimix.commons.parser.ITokenizer;
+import org.ubimix.commons.parser.StreamToken;
 import org.ubimix.commons.parser.AbstractParser.IParserListener;
-import org.ubimix.commons.tokenizer.CharStream.Marker;
-import org.ubimix.commons.tokenizer.ITokenizer;
-import org.ubimix.commons.tokenizer.StreamToken;
-import org.ubimix.commons.tokenizer.json.JsonDict;
-import org.ubimix.commons.tokenizer.json.JsonTokenizer;
+import org.ubimix.commons.parser.CharStream.Marker;
+import org.ubimix.commons.parser.json.JsonDict;
+import org.ubimix.commons.parser.json.JsonTokenizer;
 
 /**
  * @author kotelnikov

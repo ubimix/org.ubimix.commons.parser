@@ -1,0 +1,81 @@
+/**
+ * 
+ */
+package org.ubimix.commons.parser;
+
+import junit.framework.TestCase;
+
+import org.ubimix.commons.parser.CharStream;
+import org.ubimix.commons.parser.ITokenizer;
+import org.ubimix.commons.parser.StreamToken;
+import org.ubimix.commons.parser.CharStream.Pointer;
+import org.ubimix.commons.parser.text.TextTokenizer;
+
+/**
+ * @author kotelnikov
+ */
+public class BasicTokenizerTest extends TestCase {
+
+    public BasicTokenizerTest(String name) {
+        super(name);
+    }
+
+    private ITokenizer getXHTMLTokenizer() {
+        return new TextTokenizer();
+    }
+
+    protected void printToken(StreamToken token) {
+        String s = token.getToken();
+        s = s.replaceAll("\\\\", "\\\\").replaceAll("\\t", "\\\\t").replaceAll(
+            "\\r\\n",
+            "\\\\n").replaceAll("\\n", "\\\\n");
+        String status = token.isOpen() ? "+" : "-";
+        status += "/";
+        status += token.isClose() ? "+" : "-";
+
+        Pointer p = token.getBegin();
+        String pos = "(";
+        pos += p.line + ":" + p.column;
+        pos += " - ";
+        p = token.getEnd();
+        pos += p.line + ":" + p.column;
+        pos += ")";
+
+        System.out
+            .println(token + "\t" + pos + "\t" + status + "\t'" + s + "'");
+    }
+
+    public void test() throws Exception {
+        ITokenizer tokenizer = getXHTMLTokenizer();
+        testBasicTokenizer(tokenizer, "–*");
+        testBasicTokenizer(tokenizer, "<p>–");
+        testBasicTokenizer(tokenizer, "<p>–&#160;</p>");
+        testBasicTokenizer(tokenizer, ""
+            + "<!-- This is a comment -->\n"
+            + "<html>\n"
+            + "<head>\n"
+            + "   <title>Hello, world!</title>\n"
+            + "</head>\n"
+            + "<body>\n"
+            + "   <h1>I am here!</h1>"
+            + "   <p>This is a new paragraph &nbsp; &nbsp;</p>\n"
+            + "<p>An another paragraph <br /> with \r\n a line break.</p>\n"
+            + "<hr \n"
+            + "     style='border: 1px solid red; \r\n margin: 1em 0;'/>\n"
+            + "</body>\n"
+            + "</html>");
+    }
+
+    private void testBasicTokenizer(ITokenizer tokenizer, String str) {
+        StringBuilder builder = new StringBuilder();
+        CharStream stream = new CharStream(str);
+        while (true) {
+            StreamToken token = tokenizer.read(stream);
+            if (token == null)
+                break;
+            printToken(token);
+            builder.append(token.getToken());
+        }
+        assertEquals(str, builder.toString());
+    }
+}

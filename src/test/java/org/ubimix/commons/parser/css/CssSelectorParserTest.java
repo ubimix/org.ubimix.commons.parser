@@ -5,10 +5,9 @@ package org.ubimix.commons.parser.css;
 
 import junit.framework.TestCase;
 
-import org.ubimix.commons.parser.CssSelectorParser;
-import org.ubimix.commons.parser.CssSelectorParser.CssSelectorListener;
-import org.ubimix.commons.parser.CssSelectorParser.ICssSelectorListener;
-import org.ubimix.commons.tokenizer.CharStream;
+import org.ubimix.commons.parser.CharStream;
+import org.ubimix.commons.parser.css.CssSelectorParser.CssSelectorListener;
+import org.ubimix.commons.parser.css.CssSelectorParser.ICssSelectorListener;
 
 /**
  * @author kotelnikov

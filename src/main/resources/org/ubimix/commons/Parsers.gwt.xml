@@ -1,5 +1,5 @@
 <module>
     <source path="parser">
-        <exclude name="**/server/**" />
+        <exclude name="**/stream/**" />
     </source>
 </module>

@@ -3,10 +3,7 @@
  */
 package org.ubimix.commons.parser;
 
-import org.ubimix.commons.tokenizer.CharStream;
-import org.ubimix.commons.tokenizer.ITokenizer;
-import org.ubimix.commons.tokenizer.StreamToken;
-import org.ubimix.commons.tokenizer.text.TextDict;
+import org.ubimix.commons.parser.text.TextDict;
 
 /**
  * @author kotelnikov

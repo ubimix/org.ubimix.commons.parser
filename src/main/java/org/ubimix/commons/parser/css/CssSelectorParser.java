@@ -1,25 +1,27 @@
 /**
  * 
  */
-package org.ubimix.commons.parser;
+package org.ubimix.commons.parser.css;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.ubimix.commons.parser.AbstractParser;
 import org.ubimix.commons.parser.AbstractParser.IParserListener;
-import org.ubimix.commons.tokenizer.StreamToken;
-import org.ubimix.commons.tokenizer.css.CssSelectorTokenizer;
-import org.ubimix.commons.tokenizer.css.CssSelectorTokenizer.CssAttrSelectorToken;
-import org.ubimix.commons.tokenizer.css.CssSelectorTokenizer.CssCombinatorToken;
-import org.ubimix.commons.tokenizer.css.CssSelectorTokenizer.CssCompositeAttrSelectorToken;
-import org.ubimix.commons.tokenizer.css.CssSelectorTokenizer.CssSimpleAttrSelectorToken;
-import org.ubimix.commons.tokenizer.css.CssSelectorTokenizer.CssSimpleAttrSelectorToken.MatchType;
-import org.ubimix.commons.tokenizer.css.CssSelectorTokenizer.CssTagSelectorToken;
+import org.ubimix.commons.parser.StreamToken;
+import org.ubimix.commons.parser.css.CssSelectorTokenizer.CssAttrSelectorToken;
+import org.ubimix.commons.parser.css.CssSelectorTokenizer.CssCombinatorToken;
+import org.ubimix.commons.parser.css.CssSelectorTokenizer.CssCompositeAttrSelectorToken;
+import org.ubimix.commons.parser.css.CssSelectorTokenizer.CssSimpleAttrSelectorToken;
+import org.ubimix.commons.parser.css.CssSelectorTokenizer.CssSimpleAttrSelectorToken.MatchType;
+import org.ubimix.commons.parser.css.CssSelectorTokenizer.CssTagSelectorToken;
 
 /**
  * @author kotelnikov
  */
-public class CssSelectorParser extends AbstractParser<CssSelectorParser.ICssSelectorListener> {
+public class CssSelectorParser
+    extends
+    AbstractParser<CssSelectorParser.ICssSelectorListener> {
 
     public static class CssSelectorListener extends ParserListener
         implements
