@@ -3,11 +3,10 @@
  */
 package org.ubimix.commons.parser;
 
-import org.ubimix.commons.parser.CharStream;
-import org.ubimix.commons.parser.StreamToken;
-import org.ubimix.commons.parser.base.QuotedValueTokenizer;
-
 import junit.framework.TestCase;
+
+import org.ubimix.commons.parser.ITokenizer.StreamToken;
+import org.ubimix.commons.parser.base.QuotedValueTokenizer;
 
 /**
  * @author kotelnikov
@@ -41,18 +40,13 @@ public class QuotedValueTokenizerTest extends TestCase {
 
     private void test(String str, String control, final boolean strict) {
         CharStream stream = new CharStream(str);
-        QuotedValueTokenizer tokenizer = new QuotedValueTokenizer("x") {
-            @Override
-            protected boolean strictPatterns() {
-                return strict;
-            }
-        };
+        QuotedValueTokenizer tokenizer = new QuotedValueTokenizer(strict);
         StreamToken token = tokenizer.read(stream);
         if (control == null) {
             assertNull(token);
         } else {
             assertNotNull(token);
-            assertEquals(control, token.getContent());
+            assertEquals(control, token.getText());
         }
     }
 }

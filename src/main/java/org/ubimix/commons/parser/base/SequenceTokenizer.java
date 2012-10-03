@@ -9,10 +9,12 @@ package org.ubimix.commons.parser.base;
  */
 public class SequenceTokenizer extends SimpleTokenizer {
 
+    public static class SequenceToken extends StreamToken {
+    }
+
     protected String fSequence;
 
-    public SequenceTokenizer(String key, String sequence) {
-        super(key);
+    public SequenceTokenizer(String sequence) {
         fSequence = sequence;
     }
 
@@ -33,6 +35,11 @@ public class SequenceTokenizer extends SimpleTokenizer {
     @Override
     protected int getMinLength() {
         return fSequence.length();
+    }
+
+    @Override
+    protected StreamToken newToken() {
+        return new SequenceToken();
     }
 
 }

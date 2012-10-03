@@ -3,16 +3,21 @@
  */
 package org.ubimix.commons.parser.base;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.ubimix.commons.parser.AbstractTokenizer;
 import org.ubimix.commons.parser.CharStream;
-import org.ubimix.commons.parser.ITokenizer;
-import org.ubimix.commons.parser.StreamToken;
 import org.ubimix.commons.parser.CharStream.Marker;
 import org.ubimix.commons.parser.CharStream.Pointer;
 
 /**
  * @author kotelnikov
  */
-public class DelimitedTextTokenizer implements ITokenizer {
+public class DelimitedTextTokenizer extends AbstractTokenizer {
+
+    public static class DelimitedTextToken extends StreamToken {
+    }
 
     private SequenceTokenizer fBeginToknizer;
 
@@ -20,23 +25,12 @@ public class DelimitedTextTokenizer implements ITokenizer {
 
     private char fFirstChar;
 
-    private String fKey;
-
     private boolean fRecursive;
 
-    public DelimitedTextTokenizer(String key, String begin, String end) {
-        this(key, begin, end, false);
-    }
-
-    public DelimitedTextTokenizer(
-        String key,
-        String begin,
-        String end,
-        boolean recursive) {
-        fKey = key;
+    public DelimitedTextTokenizer(String begin, String end, boolean recursive) {
         fFirstChar = begin.charAt(0);
-        fBeginToknizer = new SequenceTokenizer(fKey, begin);
-        fEndToknizer = new SequenceTokenizer(fKey, end);
+        fBeginToknizer = new SequenceTokenizer(begin);
+        fEndToknizer = new SequenceTokenizer(end);
         fRecursive = recursive;
     }
 
@@ -45,21 +39,21 @@ public class DelimitedTextTokenizer implements ITokenizer {
      * overloaded in subclasses.
      * 
      * @param parent to this token the first child should be attached
-     * @param firstChild the first child in the list
+     * @param children TODO
      */
-    protected void addSubtokens(StreamToken parent, StreamToken firstChild) {
-        // 
+    protected void addSubtokens(StreamToken parent, List<StreamToken> children) {
+        //
     }
 
-    public String getKey() {
-        return fKey;
+    @Override
+    protected StreamToken newToken() {
+        return new DelimitedTextToken();
     }
 
     /**
      * Returns a newly created token corresponding to the given start and end
      * positions. This method could be overloaded in subclasses.
      * 
-     * @param key the key of the token
      * @param begin the start position of the token to create
      * @param end the end position of the token
      * @param str the string representation of the token
@@ -67,18 +61,20 @@ public class DelimitedTextTokenizer implements ITokenizer {
      * @return a new token with the given parameters
      */
     protected StreamToken newToken(
-        String key,
         Pointer begin,
         Pointer end,
         String str,
         int level) {
-        return new StreamToken(key, begin, end, str);
+        StreamToken token = newToken(begin, end, str);
+        return token;
     }
 
+    @Override
     public StreamToken read(CharStream stream) {
         char ch = stream.getChar();
-        if (ch != fFirstChar)
+        if (ch != fFirstChar) {
             return null;
+        }
         Marker marker = stream.markPosition();
         StreamToken result = null;
         try {
@@ -91,36 +87,38 @@ public class DelimitedTextTokenizer implements ITokenizer {
 
     public StreamToken skip(Marker marker, CharStream stream, int level) {
         char ch = stream.getChar();
-        if (ch != fFirstChar)
+        if (ch != fFirstChar) {
             return null;
+        }
         Pointer begin = stream.getPointer();
-        if (fBeginToknizer.read(stream) == null)
+        if (fBeginToknizer.read(stream) == null) {
             return null;
-        StreamToken first = null;
-        StreamToken last = null;
+        }
         StreamToken endToken = null;
+        List<StreamToken> children = null;
         while ((endToken = fEndToknizer.read(stream)) == null) {
-            if (!skipContentSymbols(stream))
+            if (!skipContentSymbols(stream)) {
                 break;
-            if (!fRecursive)
+            }
+            if (!fRecursive) {
                 continue;
+            }
             StreamToken token = skip(marker, stream, level + 1);
             if (token != null) {
-                if (first == null) {
-                    first = token;
-                } else if (last != null) {
-                    last.insertAfter(token);
+                if (children == null) {
+                    children = new ArrayList<StreamToken>();
                 }
-                last = token;
+                children.add(token);
             }
         }
-        if (endToken == null)
+        if (endToken == null) {
             return null;
+        }
         Pointer end = stream.getPointer();
         String str = marker.getSubstring(begin, end);
-        StreamToken result = newToken(fKey, begin, end, str, level);
-        if (first != null) {
-            addSubtokens(result, first);
+        StreamToken result = newToken(begin, end, str, level);
+        if (children != null) {
+            addSubtokens(result, children);
         }
         return result;
     }

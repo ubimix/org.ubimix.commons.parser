@@ -5,7 +5,6 @@ package org.ubimix.commons.parser.base;
 
 import org.ubimix.commons.parser.AbstractTokenizer;
 import org.ubimix.commons.parser.CharStream;
-import org.ubimix.commons.parser.StreamToken;
 import org.ubimix.commons.parser.CharStream.Pointer;
 import org.ubimix.commons.parser.text.TextDict;
 
@@ -34,22 +33,21 @@ public final class NewLineTokenizer extends AbstractTokenizer {
         return null;
     }
 
-    public NewLineTokenizer() {
-        this(TextDict.EOL);
-    }
-
-    public NewLineTokenizer(String key) {
-        super(key);
+    @Override
+    protected StreamToken newToken() {
+        return new TextDict.NewLineToken();
     }
 
     /**
      * @see org.ubimix.commons.parser.org.ubimix.commons.parser.tokenizer.Tokenizer.ITokenizer#read(org.ubimix.commons.parser.CharStream)
      */
+    @Override
     public StreamToken read(CharStream stream) {
         Pointer startPos = stream.getPointer();
         String result = readNewLine(stream);
-        if (result == null)
+        if (result == null) {
             return null;
+        }
         Pointer endPos = stream.getPointer();
         return newToken(startPos, endPos, result);
     }

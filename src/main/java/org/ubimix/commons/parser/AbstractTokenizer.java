@@ -11,26 +11,20 @@ import org.ubimix.commons.parser.CharStream.Pointer;
  */
 public abstract class AbstractTokenizer implements ITokenizer {
 
-    protected String fKey;
-
-    public AbstractTokenizer(String key) {
-        fKey = key;
+    public AbstractTokenizer() {
     }
 
-    protected boolean isClosing() {
-        return false;
-    }
+    protected abstract StreamToken newToken();
 
-    protected boolean isOpening() {
-        return true;
-    }
-
-    protected StreamToken newToken(CharStream stream, Marker marker) {
+    protected final <T extends StreamToken> T newToken(
+        CharStream stream,
+        Marker marker) {
         Pointer begin = marker.getPointer();
         Pointer end = stream.getPointer();
         int len = end.len(begin);
         String str = marker.getSubstring(len);
-        return newToken(begin, end, str);
+        T token = newToken(begin, end, str);
+        return token;
     }
 
     /**
@@ -41,14 +35,13 @@ public abstract class AbstractTokenizer implements ITokenizer {
      * @param str the string representation of the token
      * @return a newly created token
      */
-    protected StreamToken newToken(Pointer begin, Pointer end, String str) {
-        StreamToken token = new StreamToken(
-            fKey,
-            isOpening(),
-            isClosing(),
-            begin,
-            end,
-            str);
+    protected final <T extends StreamToken> T newToken(
+        Pointer begin,
+        Pointer end,
+        String str) {
+        @SuppressWarnings("unchecked")
+        T token = (T) newToken();
+        token.init(begin, end, str);
         return token;
     }
 

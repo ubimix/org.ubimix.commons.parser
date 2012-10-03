@@ -10,7 +10,6 @@ import java.io.UnsupportedEncodingException;
 
 import junit.framework.TestCase;
 
-import org.ubimix.commons.parser.CharStream;
 import org.ubimix.commons.parser.stream.StreamCharLoader;
 
 /**

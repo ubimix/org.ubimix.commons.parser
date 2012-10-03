@@ -3,6 +3,7 @@
  */
 package org.ubimix.commons.parser;
 
+import org.ubimix.commons.parser.ITokenizer.StreamToken;
 import org.ubimix.commons.parser.text.TextDict;
 
 /**
@@ -88,7 +89,7 @@ public abstract class AbstractParser<L extends AbstractParser.IParserListener> {
 
     protected StreamToken skipSpaces(boolean loadNext) {
         StreamToken token = getToken(loadNext);
-        if (token != null && TextDict.SPACES.equals(token.getKey())) {
+        if (token != null && token instanceof TextDict.SpacesToken) {
             token = getToken(true);
         }
         return token;

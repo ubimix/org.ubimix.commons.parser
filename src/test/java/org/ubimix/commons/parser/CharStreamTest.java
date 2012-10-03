@@ -7,7 +7,6 @@ import java.io.IOException;
 
 import junit.framework.TestCase;
 
-import org.ubimix.commons.parser.CharStream;
 import org.ubimix.commons.parser.CharStream.Marker;
 
 /**

@@ -9,16 +9,13 @@ public final class WordTokenizer extends SimpleTokenizer {
 
     public static final WordTokenizer INSTANCE = new WordTokenizer();
 
-    public WordTokenizer() {
-        this(TextDict.WORD);
-    }
-
-    public WordTokenizer(String key) {
-        super(key);
-    }
-
     @Override
     protected boolean checkChar(char ch, int pos) {
         return Character.isLetterOrDigit(ch);
+    }
+
+    @Override
+    protected StreamToken newToken() {
+        return new TextDict.WordToken();
     }
 }

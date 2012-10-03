@@ -3,31 +3,38 @@
  */
 package org.ubimix.commons.parser.base;
 
+import org.ubimix.commons.parser.AbstractTokenizer;
 import org.ubimix.commons.parser.CharStream;
-import org.ubimix.commons.parser.ITokenizer;
-import org.ubimix.commons.parser.StreamToken;
 import org.ubimix.commons.parser.CharStream.Marker;
 
 /**
  * @author kotelnikov
  */
-public class QuotedValueTokenizer implements ITokenizer {
+public class QuotedValueTokenizer extends AbstractTokenizer {
 
-    private String fKey;
+    public static class QuotedValueToken extends StreamToken {
+    }
 
-    public QuotedValueTokenizer(String key) {
-        fKey = key;
+    private boolean fStrictPatterns;
+
+    public QuotedValueTokenizer() {
+        this(true);
+    }
+
+    public QuotedValueTokenizer(boolean strictPattern) {
+        fStrictPatterns = strictPattern;
     }
 
     protected char getEscapeSymbol() {
         return '\\';
     }
 
-    protected StreamToken newToken(CharStream stream, Marker marker) {
-        StreamToken result = new StreamToken(fKey, stream, marker);
-        return result;
+    @Override
+    protected StreamToken newToken() {
+        return new QuotedValueToken();
     }
 
+    @Override
     public StreamToken read(CharStream stream) {
         StreamToken result = null;
         char esc = getEscapeSymbol();
@@ -62,7 +69,7 @@ public class QuotedValueTokenizer implements ITokenizer {
     }
 
     protected boolean strictPatterns() {
-        return true;
+        return fStrictPatterns;
     }
 
 }

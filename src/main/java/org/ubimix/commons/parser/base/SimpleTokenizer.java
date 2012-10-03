@@ -5,14 +5,9 @@ package org.ubimix.commons.parser.base;
 
 import org.ubimix.commons.parser.AbstractTokenizer;
 import org.ubimix.commons.parser.CharStream;
-import org.ubimix.commons.parser.StreamToken;
 import org.ubimix.commons.parser.CharStream.Marker;
 
 public abstract class SimpleTokenizer extends AbstractTokenizer {
-
-    public SimpleTokenizer(String key) {
-        super(key);
-    }
 
     protected abstract boolean checkChar(char ch, int pos);
 
@@ -24,11 +19,13 @@ public abstract class SimpleTokenizer extends AbstractTokenizer {
         return 1;
     }
 
+    @Override
     public StreamToken read(CharStream stream) {
         char ch = stream.getChar();
         int localPos = 0;
-        if (!checkChar(ch, localPos))
+        if (!checkChar(ch, localPos)) {
             return null;
+        }
         int minLen = getMinLength();
         int maxLen = getMaxLength();
         StreamToken result = null;
@@ -39,8 +36,9 @@ public abstract class SimpleTokenizer extends AbstractTokenizer {
                 while (localPos < maxLen
                     && checkChar(stream.getChar(), localPos)) {
                     localPos++;
-                    if (!stream.incPos())
+                    if (!stream.incPos()) {
                         break;
+                    }
                 }
             }
             result = localPos >= minLen ? newToken(stream, marker) : null;

@@ -3,6 +3,8 @@
  */
 package org.ubimix.commons.parser.text;
 
+import org.ubimix.commons.parser.ITokenizer.StreamToken;
+
 /**
  * A basic dictionary defining all basic tokens like "word", "space", "special"
  * (special symbols), and "eol" (end of the line).
@@ -11,18 +13,16 @@ package org.ubimix.commons.parser.text;
  */
 public class TextDict {
 
-    public final static String[] _ALL;
+    public static class NewLineToken extends StreamToken {
+    }
 
-    public final static String EOL = "eol";
+    public static class SpacesToken extends StreamToken {
+    }
 
-    public final static String SPACES = "spaces";
+    public static class SpecialSymbolsToken extends StreamToken {
+    }
 
-    public final static String SPECIAL = "special";
-
-    public final static String WORD = "word";
-
-    static {
-        _ALL = new String[] { EOL, SPACES, SPECIAL, WORD };
+    public static class WordToken extends StreamToken {
     }
 
 }

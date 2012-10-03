@@ -5,10 +5,8 @@ package org.ubimix.commons.parser;
 
 import junit.framework.TestCase;
 
-import org.ubimix.commons.parser.CharStream;
-import org.ubimix.commons.parser.ITokenizer;
-import org.ubimix.commons.parser.StreamToken;
 import org.ubimix.commons.parser.CharStream.Pointer;
+import org.ubimix.commons.parser.ITokenizer.StreamToken;
 import org.ubimix.commons.parser.text.TextTokenizer;
 
 /**
@@ -25,13 +23,12 @@ public class BasicTokenizerTest extends TestCase {
     }
 
     protected void printToken(StreamToken token) {
-        String s = token.getToken();
-        s = s.replaceAll("\\\\", "\\\\").replaceAll("\\t", "\\\\t").replaceAll(
-            "\\r\\n",
-            "\\\\n").replaceAll("\\n", "\\\\n");
-        String status = token.isOpen() ? "+" : "-";
-        status += "/";
-        status += token.isClose() ? "+" : "-";
+        String s = token.getText();
+        s = s
+            .replaceAll("\\\\", "\\\\")
+            .replaceAll("\\t", "\\\\t")
+            .replaceAll("\\r\\n", "\\\\n")
+            .replaceAll("\\n", "\\\\n");
 
         Pointer p = token.getBegin();
         String pos = "(";
@@ -41,8 +38,7 @@ public class BasicTokenizerTest extends TestCase {
         pos += p.line + ":" + p.column;
         pos += ")";
 
-        System.out
-            .println(token + "\t" + pos + "\t" + status + "\t'" + s + "'");
+        System.out.println(token + "\t" + pos + "\t'" + s + "'");
     }
 
     public void test() throws Exception {
@@ -71,10 +67,11 @@ public class BasicTokenizerTest extends TestCase {
         CharStream stream = new CharStream(str);
         while (true) {
             StreamToken token = tokenizer.read(stream);
-            if (token == null)
+            if (token == null) {
                 break;
+            }
             printToken(token);
-            builder.append(token.getToken());
+            builder.append(token.getText());
         }
         assertEquals(str, builder.toString());
     }

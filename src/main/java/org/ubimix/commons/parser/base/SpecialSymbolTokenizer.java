@@ -9,14 +9,6 @@ public final class SpecialSymbolTokenizer extends SimpleTokenizer {
 
     public static SpecialSymbolTokenizer INSTANCE = new SpecialSymbolTokenizer();
 
-    public SpecialSymbolTokenizer() {
-        this(TextDict.SPECIAL);
-    }
-
-    public SpecialSymbolTokenizer(String key) {
-        super(key);
-    }
-
     @Override
     protected boolean checkChar(char ch, int pos) {
         return !Character.isLetterOrDigit(ch)
@@ -71,6 +63,11 @@ public final class SpecialSymbolTokenizer extends SimpleTokenizer {
     @Override
     protected int getMaxLength() {
         return 1;
+    }
+
+    @Override
+    protected StreamToken newToken() {
+        return new TextDict.SpecialSymbolsToken();
     }
 
 }
