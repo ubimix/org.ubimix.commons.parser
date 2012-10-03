@@ -3,7 +3,7 @@
  */
 package org.ubimix.commons.parser.text;
 
-import org.ubimix.commons.parser.ITokenizer.StreamToken;
+import org.ubimix.commons.parser.StreamToken;
 
 /**
  * A basic dictionary defining all basic tokens like "word", "space", "special"

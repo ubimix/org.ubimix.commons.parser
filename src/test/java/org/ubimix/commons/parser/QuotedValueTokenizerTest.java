@@ -5,7 +5,6 @@ package org.ubimix.commons.parser;
 
 import junit.framework.TestCase;
 
-import org.ubimix.commons.parser.ITokenizer.StreamToken;
 import org.ubimix.commons.parser.base.QuotedValueTokenizer;
 
 /**

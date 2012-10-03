@@ -10,6 +10,7 @@ import org.ubimix.commons.parser.AbstractTokenizer;
 import org.ubimix.commons.parser.CharStream;
 import org.ubimix.commons.parser.CharStream.Marker;
 import org.ubimix.commons.parser.CharStream.Pointer;
+import org.ubimix.commons.parser.StreamToken;
 
 /**
  * @author kotelnikov

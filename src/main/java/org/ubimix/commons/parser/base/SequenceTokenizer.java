@@ -3,6 +3,8 @@
  */
 package org.ubimix.commons.parser.base;
 
+import org.ubimix.commons.parser.StreamToken;
+
 
 /**
  * @author kotelnikov

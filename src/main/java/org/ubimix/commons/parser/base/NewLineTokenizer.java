@@ -6,6 +6,7 @@ package org.ubimix.commons.parser.base;
 import org.ubimix.commons.parser.AbstractTokenizer;
 import org.ubimix.commons.parser.CharStream;
 import org.ubimix.commons.parser.CharStream.Pointer;
+import org.ubimix.commons.parser.StreamToken;
 import org.ubimix.commons.parser.text.TextDict;
 
 public final class NewLineTokenizer extends AbstractTokenizer {

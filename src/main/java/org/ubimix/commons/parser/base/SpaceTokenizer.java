@@ -3,6 +3,7 @@
  */
 package org.ubimix.commons.parser.base;
 
+import org.ubimix.commons.parser.StreamToken;
 import org.ubimix.commons.parser.text.TextDict;
 
 public final class SpaceTokenizer extends SimpleTokenizer {
