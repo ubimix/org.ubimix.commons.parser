@@ -4,8 +4,8 @@
 package org.ubimix.commons.parser.base;
 
 import org.ubimix.commons.parser.AbstractTokenizer;
-import org.ubimix.commons.parser.CharStream;
-import org.ubimix.commons.parser.CharStream.Marker;
+import org.ubimix.commons.parser.ICharStream;
+import org.ubimix.commons.parser.ICharStream.IMarker;
 import org.ubimix.commons.parser.StreamToken;
 
 /**
@@ -36,12 +36,12 @@ public class QuotedValueTokenizer extends AbstractTokenizer {
     }
 
     @Override
-    public StreamToken read(CharStream stream) {
+    public StreamToken read(ICharStream stream) {
         StreamToken result = null;
         char esc = getEscapeSymbol();
         char firstChar = stream.getChar();
         if (firstChar == '\'' || firstChar == '"') {
-            Marker marker = stream.markPosition();
+            ICharStream.IMarker marker = stream.markPosition();
             try {
                 boolean endFound = false;
                 boolean escaped = false;

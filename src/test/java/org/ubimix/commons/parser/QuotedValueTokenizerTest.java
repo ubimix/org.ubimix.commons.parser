@@ -38,7 +38,7 @@ public class QuotedValueTokenizerTest extends TestCase {
     }
 
     private void test(String str, String control, final boolean strict) {
-        CharStream stream = new CharStream(str);
+        ICharStream stream = new CharStream(str);
         QuotedValueTokenizer tokenizer = new QuotedValueTokenizer(strict);
         StreamToken token = tokenizer.read(stream);
         if (control == null) {

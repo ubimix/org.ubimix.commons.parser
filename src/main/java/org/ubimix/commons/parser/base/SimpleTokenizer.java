@@ -4,8 +4,8 @@
 package org.ubimix.commons.parser.base;
 
 import org.ubimix.commons.parser.AbstractTokenizer;
-import org.ubimix.commons.parser.CharStream;
-import org.ubimix.commons.parser.CharStream.Marker;
+import org.ubimix.commons.parser.ICharStream;
+import org.ubimix.commons.parser.ICharStream.IMarker;
 import org.ubimix.commons.parser.StreamToken;
 
 public abstract class SimpleTokenizer extends AbstractTokenizer {
@@ -21,7 +21,7 @@ public abstract class SimpleTokenizer extends AbstractTokenizer {
     }
 
     @Override
-    public StreamToken read(CharStream stream) {
+    public StreamToken read(ICharStream stream) {
         char ch = stream.getChar();
         int localPos = 0;
         if (!checkChar(ch, localPos)) {
@@ -30,7 +30,7 @@ public abstract class SimpleTokenizer extends AbstractTokenizer {
         int minLen = getMinLength();
         int maxLen = getMaxLength();
         StreamToken result = null;
-        Marker marker = stream.markPosition();
+        ICharStream.IMarker marker = stream.markPosition();
         try {
             localPos++;
             if (stream.incPos()) {

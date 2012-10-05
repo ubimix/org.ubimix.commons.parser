@@ -5,7 +5,7 @@ package org.ubimix.commons.parser;
 
 import junit.framework.TestCase;
 
-import org.ubimix.commons.parser.CharStream.Pointer;
+import org.ubimix.commons.parser.ICharStream.IPointer;
 import org.ubimix.commons.parser.text.TextTokenizer;
 
 /**
@@ -29,12 +29,12 @@ public class BasicTokenizerTest extends TestCase {
             .replaceAll("\\r\\n", "\\\\n")
             .replaceAll("\\n", "\\\\n");
 
-        Pointer p = token.getBegin();
+        ICharStream.IPointer p = token.getBegin();
         String pos = "(";
-        pos += p.line + ":" + p.column;
+        pos += p.getLine() + ":" + p.getColumn();
         pos += " - ";
         p = token.getEnd();
-        pos += p.line + ":" + p.column;
+        pos += p.getLine() + ":" + p.getColumn();
         pos += ")";
 
         System.out.println(token + "\t" + pos + "\t'" + s + "'");
@@ -63,7 +63,7 @@ public class BasicTokenizerTest extends TestCase {
 
     private void testBasicTokenizer(ITokenizer tokenizer, String str) {
         StringBuilder builder = new StringBuilder();
-        CharStream stream = new CharStream(str);
+        ICharStream stream = new CharStream(str);
         while (true) {
             StreamToken token = tokenizer.read(stream);
             if (token == null) {

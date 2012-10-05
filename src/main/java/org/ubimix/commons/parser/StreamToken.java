@@ -1,13 +1,15 @@
 package org.ubimix.commons.parser;
 
+import org.ubimix.commons.parser.ICharStream.IPointer;
+
 /**
  * @author kotelnikov
  */
 public class StreamToken {
 
-    private CharStream.Pointer fBegin;
+    private ICharStream.IPointer fBegin;
 
-    private CharStream.Pointer fEnd;
+    private ICharStream.IPointer fEnd;
 
     private String fText;
 
@@ -30,11 +32,11 @@ public class StreamToken {
         return a == null || b == null ? a == b : a.equals(b);
     }
 
-    public CharStream.Pointer getBegin() {
+    public ICharStream.IPointer getBegin() {
         return fBegin;
     }
 
-    public CharStream.Pointer getEnd() {
+    public ICharStream.IPointer getEnd() {
         return fEnd;
     }
 
@@ -54,10 +56,7 @@ public class StreamToken {
         return getKey().hashCode();
     }
 
-    protected void init(
-        CharStream.Pointer begin,
-        CharStream.Pointer end,
-        String text) {
+    protected void init(ICharStream.IPointer begin, ICharStream.IPointer end, String text) {
         fBegin = begin;
         fEnd = end;
         fText = text;

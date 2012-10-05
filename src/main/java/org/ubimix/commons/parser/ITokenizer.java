@@ -8,6 +8,6 @@ package org.ubimix.commons.parser;
  */
 public interface ITokenizer {
 
-    StreamToken read(CharStream stream);
+    StreamToken read(ICharStream stream);
 
 }

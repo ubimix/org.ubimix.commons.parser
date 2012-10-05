@@ -6,7 +6,6 @@ package org.ubimix.commons.parser;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * @author kotelnikov
  */
@@ -18,7 +17,8 @@ public class CompositeTokenizer implements ITokenizer {
         fList.add(tokenizer);
     }
 
-    public StreamToken read(CharStream stream) {
+    @Override
+    public StreamToken read(ICharStream stream) {
         for (ITokenizer tokenizer : fList) {
             StreamToken token = tokenizer.read(stream);
             if (token != null) {

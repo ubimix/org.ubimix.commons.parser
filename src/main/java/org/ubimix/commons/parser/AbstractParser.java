@@ -3,6 +3,7 @@
  */
 package org.ubimix.commons.parser;
 
+import org.ubimix.commons.parser.ICharStream.IPointer;
 import org.ubimix.commons.parser.text.TextDict;
 
 /**
@@ -12,7 +13,7 @@ public abstract class AbstractParser<L extends AbstractParser.IParserListener> {
 
     public interface IParserListener {
 
-        void onError(String message, CharStream.Pointer streamPosition);
+        void onError(String message, ICharStream.IPointer streamPosition);
 
         boolean reportErrors();
     }
@@ -22,7 +23,7 @@ public abstract class AbstractParser<L extends AbstractParser.IParserListener> {
         private boolean fReportErrors;
 
         @Override
-        public void onError(String message, CharStream.Pointer streamPosition) {
+        public void onError(String message, ICharStream.IPointer streamPosition) {
             throw new IllegalStateException(message + " Pos: " + streamPosition);
         }
 
@@ -39,7 +40,7 @@ public abstract class AbstractParser<L extends AbstractParser.IParserListener> {
 
     protected L fListener;
 
-    private CharStream fStream;
+    private ICharStream fStream;
 
     private StreamToken fToken;
 
@@ -54,7 +55,7 @@ public abstract class AbstractParser<L extends AbstractParser.IParserListener> {
 
     protected abstract void doParse();
 
-    public CharStream getStream() {
+    public ICharStream getStream() {
         return fStream;
     }
 
@@ -71,7 +72,7 @@ public abstract class AbstractParser<L extends AbstractParser.IParserListener> {
         }
     }
 
-    public final void parse(CharStream stream, L listener) {
+    public final void parse(ICharStream stream, L listener) {
         try {
             fStream = stream;
             fListener = listener;

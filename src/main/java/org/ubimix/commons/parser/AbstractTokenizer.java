@@ -3,13 +3,29 @@
  */
 package org.ubimix.commons.parser;
 
-import org.ubimix.commons.parser.CharStream.Marker;
-import org.ubimix.commons.parser.CharStream.Pointer;
+import org.ubimix.commons.parser.ICharStream.IMarker;
+import org.ubimix.commons.parser.ICharStream.IPointer;
+
 
 /**
  * @author kotelnikov
  */
 public abstract class AbstractTokenizer implements ITokenizer {
+
+    public static String getString(ICharStream.IMarker marker, int len) {
+        return marker.getSubstring(marker.getPointer().getPos(), len);
+    }
+
+    public static String getString(ICharStream.IMarker marker, ICharStream.IPointer end) {
+        return getString(marker, marker.getPointer(), end);
+    }
+
+    public static String getString(ICharStream.IMarker marker, ICharStream.IPointer begin, ICharStream.IPointer end) {
+        String match = marker.getSubstring(
+            begin.getPos(),
+            end.getPos() - begin.getPos());
+        return match;
+    }
 
     public AbstractTokenizer() {
     }
@@ -17,12 +33,12 @@ public abstract class AbstractTokenizer implements ITokenizer {
     protected abstract StreamToken newToken();
 
     protected final <T extends StreamToken> T newToken(
-        CharStream stream,
-        Marker marker) {
-        Pointer begin = marker.getPointer();
-        Pointer end = stream.getPointer();
-        int len = end.len(begin);
-        String str = marker.getSubstring(len);
+        ICharStream stream,
+        ICharStream.IMarker marker) {
+        ICharStream.IPointer begin = marker.getPointer();
+        ICharStream.IPointer end = stream.getPointer();
+        int len = end.getPos() - begin.getPos();
+        String str = getString(marker, len);
         T token = newToken(begin, end, str);
         return token;
     }
@@ -36,8 +52,8 @@ public abstract class AbstractTokenizer implements ITokenizer {
      * @return a newly created token
      */
     protected final <T extends StreamToken> T newToken(
-        Pointer begin,
-        Pointer end,
+        ICharStream.IPointer begin,
+        ICharStream.IPointer end,
         String str) {
         @SuppressWarnings("unchecked")
         T token = (T) newToken();

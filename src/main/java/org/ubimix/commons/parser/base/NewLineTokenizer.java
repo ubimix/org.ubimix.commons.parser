@@ -4,8 +4,8 @@
 package org.ubimix.commons.parser.base;
 
 import org.ubimix.commons.parser.AbstractTokenizer;
-import org.ubimix.commons.parser.CharStream;
-import org.ubimix.commons.parser.CharStream.Pointer;
+import org.ubimix.commons.parser.ICharStream;
+import org.ubimix.commons.parser.ICharStream.IPointer;
 import org.ubimix.commons.parser.StreamToken;
 import org.ubimix.commons.parser.text.TextDict;
 
@@ -17,7 +17,7 @@ public final class NewLineTokenizer extends AbstractTokenizer {
      * @param stream
      * @return
      */
-    public static String readNewLine(CharStream stream) {
+    public static String readNewLine(ICharStream stream) {
         char ch = stream.getChar();
         if (ch == '\r') {
             stream.incPos();
@@ -43,13 +43,13 @@ public final class NewLineTokenizer extends AbstractTokenizer {
      * @see org.ubimix.commons.parser.org.ubimix.commons.parser.tokenizer.Tokenizer.ITokenizer#read(org.ubimix.commons.parser.CharStream)
      */
     @Override
-    public StreamToken read(CharStream stream) {
-        Pointer startPos = stream.getPointer();
+    public StreamToken read(ICharStream stream) {
+        ICharStream.IPointer startPos = stream.getPointer();
         String result = readNewLine(stream);
         if (result == null) {
             return null;
         }
-        Pointer endPos = stream.getPointer();
+        ICharStream.IPointer endPos = stream.getPointer();
         return newToken(startPos, endPos, result);
     }
 

@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.ubimix.commons.parser.AbstractTokenizer;
-import org.ubimix.commons.parser.CharStream;
-import org.ubimix.commons.parser.CharStream.Marker;
-import org.ubimix.commons.parser.CharStream.Pointer;
+import org.ubimix.commons.parser.ICharStream;
+import org.ubimix.commons.parser.ICharStream.IMarker;
+import org.ubimix.commons.parser.ICharStream.IPointer;
 import org.ubimix.commons.parser.StreamToken;
 
 /**
@@ -62,8 +62,8 @@ public class DelimitedTextTokenizer extends AbstractTokenizer {
      * @return a new token with the given parameters
      */
     protected StreamToken newToken(
-        Pointer begin,
-        Pointer end,
+        ICharStream.IPointer begin,
+        ICharStream.IPointer end,
         String str,
         int level) {
         StreamToken token = newToken(begin, end, str);
@@ -71,12 +71,12 @@ public class DelimitedTextTokenizer extends AbstractTokenizer {
     }
 
     @Override
-    public StreamToken read(CharStream stream) {
+    public StreamToken read(ICharStream stream) {
         char ch = stream.getChar();
         if (ch != fFirstChar) {
             return null;
         }
-        Marker marker = stream.markPosition();
+        ICharStream.IMarker marker = stream.markPosition();
         StreamToken result = null;
         try {
             result = skip(marker, stream, 0);
@@ -86,12 +86,12 @@ public class DelimitedTextTokenizer extends AbstractTokenizer {
         }
     }
 
-    public StreamToken skip(Marker marker, CharStream stream, int level) {
+    public StreamToken skip(ICharStream.IMarker marker, ICharStream stream, int level) {
         char ch = stream.getChar();
         if (ch != fFirstChar) {
             return null;
         }
-        Pointer begin = stream.getPointer();
+        ICharStream.IPointer begin = stream.getPointer();
         if (fBeginToknizer.read(stream) == null) {
             return null;
         }
@@ -115,8 +115,8 @@ public class DelimitedTextTokenizer extends AbstractTokenizer {
         if (endToken == null) {
             return null;
         }
-        Pointer end = stream.getPointer();
-        String str = marker.getSubstring(begin, end);
+        ICharStream.IPointer end = stream.getPointer();
+        String str = getString(marker, begin, end);
         StreamToken result = newToken(begin, end, str, level);
         if (children != null) {
             addSubtokens(result, children);
@@ -124,7 +124,7 @@ public class DelimitedTextTokenizer extends AbstractTokenizer {
         return result;
     }
 
-    protected boolean skipContentSymbols(CharStream stream) {
+    protected boolean skipContentSymbols(ICharStream stream) {
         return stream.incPos();
     }
 }

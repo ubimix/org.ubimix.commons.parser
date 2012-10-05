@@ -72,9 +72,9 @@ public class ComparativeCharStreamTest extends TestCase {
         String resourceName = getPackageResourceName("test.wiki");
         InputStream input = getResourceAsStream(resourceName);
         try {
-            CharStream first = new CharStream(new StreamCharLoader(input));
+            ICharStream first = new CharStream(new StreamCharLoader(input));
             String str = readResourceAsString(resourceName);
-            CharStream second = new CharStream(str);
+            ICharStream second = new CharStream(str);
             int counter = 0;
             while (true) {
                 char firstCh = first.getChar();
