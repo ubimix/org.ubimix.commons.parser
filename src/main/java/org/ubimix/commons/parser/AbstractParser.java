@@ -3,37 +3,44 @@
  */
 package org.ubimix.commons.parser;
 
-import org.ubimix.commons.parser.ICharStream.IPointer;
 import org.ubimix.commons.parser.text.TextDict;
 
 /**
  * @author kotelnikov
  */
-public abstract class AbstractParser<L extends AbstractParser.IParserListener> {
+public abstract class AbstractParser<L extends IParserListener> {
 
-    public interface IParserListener {
+    /**
+     * @author kotelnikov
+     */
+    public static class ParseError extends RuntimeException {
 
-        void onError(String message, ICharStream.IPointer streamPosition);
+        private static final long serialVersionUID = -3496147491438922289L;
 
-        boolean reportErrors();
-    }
+        private ICharStream.IPointer fPointer;
 
-    public static class ParserListener implements IParserListener {
-
-        private boolean fReportErrors;
-
-        @Override
-        public void onError(String message, ICharStream.IPointer streamPosition) {
-            throw new IllegalStateException(message + " Pos: " + streamPosition);
+        public ParseError() {
+            super();
         }
 
-        @Override
-        public boolean reportErrors() {
-            return fReportErrors;
+        public ParseError(String message) {
+            super(message);
         }
 
-        public void setReportErrors(boolean reportErrors) {
-            fReportErrors = reportErrors;
+        public ParseError(String message, Throwable cause) {
+            super(message, cause);
+        }
+
+        public ParseError(Throwable cause) {
+            super(cause);
+        }
+
+        public ICharStream.IPointer getPointer() {
+            return fPointer;
+        }
+
+        public void setPointer(ICharStream.IPointer pointer) {
+            fPointer = pointer;
         }
 
     }
@@ -68,7 +75,17 @@ public abstract class AbstractParser<L extends AbstractParser.IParserListener> {
 
     protected void onError(String message) {
         if (fListener.reportErrors()) {
-            fListener.onError(message, fStream.getPointer());
+            ParseError error = new ParseError(message);
+            error.setPointer(fStream.getPointer());
+            fListener.onError(message, error);
+        }
+    }
+
+    protected void onError(String message, Throwable t) {
+        if (fListener.reportErrors()) {
+            ParseError error = new ParseError(message, t);
+            error.setPointer(fStream.getPointer());
+            fListener.onError(message, error);
         }
     }
 
