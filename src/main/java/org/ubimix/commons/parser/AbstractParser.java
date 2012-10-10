@@ -8,7 +8,9 @@ import org.ubimix.commons.parser.text.TextDict;
 /**
  * @author kotelnikov
  */
-public abstract class AbstractParser<L extends IParserListener> {
+public abstract class AbstractParser<L extends IParserListener>
+    implements
+    IParser<L> {
 
     /**
      * @author kotelnikov
@@ -62,6 +64,10 @@ public abstract class AbstractParser<L extends IParserListener> {
 
     protected abstract void doParse();
 
+    /**
+     * @see org.ubimix.commons.parser.IParser#getStream()
+     */
+    @Override
     public ICharStream getStream() {
         return fStream;
     }
@@ -89,6 +95,11 @@ public abstract class AbstractParser<L extends IParserListener> {
         }
     }
 
+    /**
+     * @see org.ubimix.commons.parser.IParser#parse(org.ubimix.commons.parser.ICharStream,
+     *      L)
+     */
+    @Override
     public final void parse(ICharStream stream, L listener) {
         try {
             fStream = stream;
@@ -100,6 +111,10 @@ public abstract class AbstractParser<L extends IParserListener> {
         }
     }
 
+    /**
+     * @see org.ubimix.commons.parser.IParser#parse(java.lang.String, L)
+     */
+    @Override
     public final void parse(String str, L listener) {
         parse(new CharStream(str), listener);
     }
