@@ -5,7 +5,6 @@ package org.ubimix.commons.parser.base;
 
 import org.ubimix.commons.parser.AbstractTokenizer;
 import org.ubimix.commons.parser.ICharStream;
-import org.ubimix.commons.parser.ICharStream.IMarker;
 import org.ubimix.commons.parser.StreamToken;
 
 /**
