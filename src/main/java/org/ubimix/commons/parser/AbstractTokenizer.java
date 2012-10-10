@@ -3,28 +3,29 @@
  */
 package org.ubimix.commons.parser;
 
-import org.ubimix.commons.parser.ICharStream.IMarker;
-import org.ubimix.commons.parser.ICharStream.IPointer;
-
-
 /**
  * @author kotelnikov
  */
 public abstract class AbstractTokenizer implements ITokenizer {
 
-    public static String getString(ICharStream.IMarker marker, int len) {
-        return marker.getSubstring(marker.getPointer().getPos(), len);
-    }
-
-    public static String getString(ICharStream.IMarker marker, ICharStream.IPointer end) {
+    public static String getString(
+        ICharStream.IMarker marker,
+        ICharStream.IPointer end) {
         return getString(marker, marker.getPointer(), end);
     }
 
-    public static String getString(ICharStream.IMarker marker, ICharStream.IPointer begin, ICharStream.IPointer end) {
+    public static String getString(
+        ICharStream.IMarker marker,
+        ICharStream.IPointer begin,
+        ICharStream.IPointer end) {
         String match = marker.getSubstring(
             begin.getPos(),
             end.getPos() - begin.getPos());
         return match;
+    }
+
+    public static String getString(ICharStream.IMarker marker, int len) {
+        return marker.getSubstring(marker.getPointer().getPos(), len);
     }
 
     public AbstractTokenizer() {

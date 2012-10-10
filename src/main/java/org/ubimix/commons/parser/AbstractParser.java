@@ -15,7 +15,7 @@ public abstract class AbstractParser<L extends IParserListener>
     /**
      * @author kotelnikov
      */
-    public static class ParseError extends RuntimeException {
+    public static class ParseError extends IllegalStateException {
 
         private static final long serialVersionUID = -3496147491438922289L;
 
