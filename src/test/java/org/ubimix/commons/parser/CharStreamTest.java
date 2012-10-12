@@ -7,9 +7,6 @@ import java.io.IOException;
 
 import junit.framework.TestCase;
 
-import org.ubimix.commons.parser.ICharStream.IMarker;
-import org.ubimix.commons.parser.ICharStream.IPointer;
-
 /**
  * @author kotelnikov
  */

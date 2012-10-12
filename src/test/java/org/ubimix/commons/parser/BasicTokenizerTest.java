@@ -5,7 +5,6 @@ package org.ubimix.commons.parser;
 
 import junit.framework.TestCase;
 
-import org.ubimix.commons.parser.ICharStream.IPointer;
 import org.ubimix.commons.parser.text.TextTokenizer;
 
 /**

@@ -1,7 +1,5 @@
 package org.ubimix.commons.parser;
 
-import org.ubimix.commons.parser.ICharStream.IPointer;
-
 /**
  * @author kotelnikov
  */
@@ -56,7 +54,10 @@ public class StreamToken {
         return getKey().hashCode();
     }
 
-    protected void init(ICharStream.IPointer begin, ICharStream.IPointer end, String text) {
+    protected void init(
+        ICharStream.IPointer begin,
+        ICharStream.IPointer end,
+        String text) {
         fBegin = begin;
         fEnd = end;
         fText = text;

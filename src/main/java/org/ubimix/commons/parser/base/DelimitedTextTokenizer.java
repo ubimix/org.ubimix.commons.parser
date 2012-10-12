@@ -8,8 +8,6 @@ import java.util.List;
 
 import org.ubimix.commons.parser.AbstractTokenizer;
 import org.ubimix.commons.parser.ICharStream;
-import org.ubimix.commons.parser.ICharStream.IMarker;
-import org.ubimix.commons.parser.ICharStream.IPointer;
 import org.ubimix.commons.parser.StreamToken;
 
 /**

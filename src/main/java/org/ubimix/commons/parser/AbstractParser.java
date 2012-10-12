@@ -79,6 +79,10 @@ public abstract class AbstractParser<L extends IParserListener>
         return fToken;
     }
 
+    public ITokenizer getTokenizer() {
+        return fTokenizer;
+    }
+
     protected void onError(String message) {
         if (fListener.reportErrors()) {
             ParseError error = new ParseError(message);
