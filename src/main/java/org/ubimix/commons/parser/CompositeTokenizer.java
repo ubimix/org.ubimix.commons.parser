@@ -17,6 +17,10 @@ public class CompositeTokenizer implements ITokenizer {
         fList.add(tokenizer);
     }
 
+    public void prependTokenizer(ITokenizer tokenizer) {
+        fList.add(0, tokenizer);
+    }
+
     @Override
     public StreamToken read(ICharStream stream) {
         for (ITokenizer tokenizer : fList) {

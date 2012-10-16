@@ -24,10 +24,27 @@ public class ComparativeCharStreamTest extends TestCase {
         super(name);
     }
 
+    protected int compareStreams(ICharStream first, ICharStream second) {
+        int counter = 0;
+        while (!first.isTerminated() && !second.isTerminated()) {
+            char firstCh = first.getChar();
+            char secondCh = second.getChar();
+            assertEquals(firstCh, secondCh);
+            assertEquals(first.getPointer(), second.getPointer());
+            counter++;
+            boolean a = first.incPos();
+            boolean b = second.incPos();
+            assertEquals(a, b);
+        }
+        assertEquals(first.isTerminated(), second.isTerminated());
+        return counter;
+    }
+
     protected String getPackageResourceName(String localName) {
         localName = localName.replace('\\', '/');
-        if (!localName.startsWith("/"))
+        if (!localName.startsWith("/")) {
             localName = "/" + localName;
+        }
         String fullName = "/"
             + getClass().getPackage().getName().replace('.', '/')
             + localName;
@@ -68,26 +85,32 @@ public class ComparativeCharStreamTest extends TestCase {
         return str;
     }
 
-    public void testStreams() throws UnsupportedEncodingException, IOException {
+    public void testBinaryStreams()
+        throws UnsupportedEncodingException,
+        IOException {
         String resourceName = getPackageResourceName("test.wiki");
         InputStream input = getResourceAsStream(resourceName);
         try {
             ICharStream first = new CharStream(new StreamCharLoader(input));
             String str = readResourceAsString(resourceName);
             ICharStream second = new CharStream(str);
-            int counter = 0;
-            while (true) {
-                char firstCh = first.getChar();
-                char secondCh = second.getChar();
-                assertEquals(firstCh, secondCh);
-                assertEquals(first.getPointer(), second.getPointer());
-                boolean a = first.incPos();
-                boolean b = second.incPos();
-                assertEquals(a, b);
-                if (!a)
-                    break;
-                counter++;
-            }
+            int counter = compareStreams(first, second);
+            assertEquals(str.length(), counter);
+        } finally {
+            input.close();
+        }
+    }
+
+    public void testStringStreams()
+        throws UnsupportedEncodingException,
+        IOException {
+        String resourceName = getPackageResourceName("test.wiki");
+        InputStream input = getResourceAsStream(resourceName);
+        try {
+            String str = readResourceAsString(resourceName);
+            ICharStream first = new CharStream(str);
+            ICharStream second = new StringBufferCharStream(str);
+            int counter = compareStreams(first, second);
             assertEquals(str.length(), counter);
         } finally {
             input.close();

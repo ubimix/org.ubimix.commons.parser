@@ -166,21 +166,28 @@ public class CharStreamTest extends TestCase {
         ICharStream stream = newCharStream("abcdef");
         test(stream, "a", "b");
         {
-            ICharStream.IMarker cMarker = stream.markPosition();
-            {
-                ICharStream.IMarker cMarker1 = stream.markPosition();
-                test(stream, "c", "d");
+            for (int i = 0; i < 4; i++) {
+                ICharStream.IMarker cMarker = stream.markPosition();
                 {
-                    ICharStream.IMarker eMarker = stream.markPosition();
-                    test(stream, "e", "f", null);
-                    eMarker.close(true);
+                    for (int j = 0; j < 4; j++) {
+                        ICharStream.IMarker cMarker1 = stream.markPosition();
+                        test(stream, "c", "d");
+                        {
+                            for (int k = 0; k < 4; k++) {
+                                ICharStream.IMarker eMarker = stream
+                                    .markPosition();
+                                test(stream, "e", "f", null);
+                                eMarker.close(true);
+                            }
+                        }
+                        test(stream, "e", "f", null);
+                        test(stream, (String) null);
+                        cMarker1.close(true);
+                    }
                 }
-                test(stream, "e", "f", null);
-                test(stream, (String) null);
-                cMarker1.close(true);
+                test(stream, "c", "d", "e", "f", null);
+                cMarker.close(true);
             }
-            test(stream, "c", "d", "e", "f", null);
-            cMarker.close(true);
         }
         test(stream, "c", "d", "e", "f", null);
     }

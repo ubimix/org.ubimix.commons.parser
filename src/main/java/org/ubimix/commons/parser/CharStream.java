@@ -254,36 +254,39 @@ public class CharStream implements ICharStream {
     @Override
     public boolean incPos() {
         fPointer = incPointer(fPointer);
+        boolean result = false;
         if (fPointer.getPos() >= fTop.getPos() - 1) {
             if (fEnd != null) {
                 fPointer = fEnd;
-                return false;
-            }
-            int val = fLoader.readNext();
-            if (fMarkCounter > 0
-                && fTop.getPos() - fFirstMark.getPos() + DELTA >= fBuf.length) {
-                int len = fBuf.length * 3 / 2;
-                char[] buf = new char[len];
-                for (int pos = fFirstMark.getPos(); pos <= fTop.getPos()
-                    + DELTA; pos++) {
-                    buf[pos % buf.length] = fBuf[pos % fBuf.length];
-                }
-                fBuf = buf;
-            }
-            char ch;
-            if (val >= 0) {
-                ch = (char) (val & 0xFFFF);
             } else {
-                fEnd = fTop;
-                ch = '\0';
+                result = true;
+                int val = fLoader.readNext();
+                if (fMarkCounter > 0
+                    && fTop.getPos() - fFirstMark.getPos() + DELTA >= fBuf.length) {
+                    int len = fBuf.length * 3 / 2;
+                    char[] buf = new char[len];
+                    for (int pos = fFirstMark.getPos(); pos <= fTop.getPos()
+                        + DELTA; pos++) {
+                        buf[pos % buf.length] = fBuf[pos % fBuf.length];
+                    }
+                    fBuf = buf;
+                }
+                char ch;
+                if (val >= 0) {
+                    ch = (char) (val & 0xFFFF);
+                } else {
+                    fEnd = fTop;
+                    ch = '\0';
+                    result = false;
+                }
+                fBuf[fTop.getPos() % fBuf.length] = ch;
+                fTop = incPointer(fTop);
             }
-            fBuf[fTop.getPos() % fBuf.length] = ch;
-            fTop = incPointer(fTop);
         }
         if (fMarkCounter == 0) {
             fFirstMark = fPointer;
         }
-        return true;
+        return result;
     }
 
     /**

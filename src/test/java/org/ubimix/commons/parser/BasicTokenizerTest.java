@@ -20,6 +20,11 @@ public class BasicTokenizerTest extends TestCase {
         return new TextTokenizer();
     }
 
+    protected ICharStream newCharStream(String str) {
+        return new CharStream(str);
+        // return new StringBufferCharStream(str);
+    }
+
     protected void printToken(StreamToken token) {
         String s = token.getText();
         s = s
@@ -62,7 +67,7 @@ public class BasicTokenizerTest extends TestCase {
 
     private void testBasicTokenizer(ITokenizer tokenizer, String str) {
         StringBuilder builder = new StringBuilder();
-        ICharStream stream = new CharStream(str);
+        ICharStream stream = newCharStream(str);
         while (true) {
             StreamToken token = tokenizer.read(stream);
             if (token == null) {
