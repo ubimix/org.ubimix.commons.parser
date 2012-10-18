@@ -192,6 +192,33 @@ public class CharStreamTest extends TestCase {
         test(stream, "c", "d", "e", "f", null);
     }
 
+    public void testMarker5() throws IOException {
+        ICharStream stream = newCharStream("abcdefgh");
+        test(stream, "a", "b");
+
+        ICharStream.IMarker marker = stream.markPosition();
+        test(stream, "c", "d");
+        marker.close(true);
+
+        marker = stream.markPosition();
+        test(stream, "c", "d");
+        marker.close(true);
+
+        marker = stream.markPosition();
+        test(stream, "c", "d");
+        marker.close(false);
+
+        marker = stream.markPosition();
+        test(stream, "e", "f", "g", "h", null);
+        marker.close(true);
+
+        marker = stream.markPosition();
+        test(stream, "e", "f");
+        marker.close(false);
+
+        test(stream, "g", "h", null);
+    }
+
     public void testMarkers() throws IOException {
         ICharStream stream = newCharStream("abcd");
         test(stream, "a");

@@ -12,6 +12,7 @@ public class AllTests {
         suite.addTestSuite(CharStreamTest.class);
         suite.addTestSuite(ComparativeCharStreamTest.class);
         suite.addTestSuite(QuotedValueTokenizerTest.class);
+        suite.addTestSuite(StringBufferCharStreamTest.class);
 
         // $JUnit-END$
         return suite;

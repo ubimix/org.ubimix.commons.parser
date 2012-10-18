@@ -84,7 +84,10 @@ public class DelimitedTextTokenizer extends AbstractTokenizer {
         }
     }
 
-    public StreamToken skip(ICharStream.IMarker marker, ICharStream stream, int level) {
+    public StreamToken skip(
+        ICharStream.IMarker marker,
+        ICharStream stream,
+        int level) {
         char ch = stream.getChar();
         if (ch != fFirstChar) {
             return null;
@@ -123,6 +126,7 @@ public class DelimitedTextTokenizer extends AbstractTokenizer {
     }
 
     protected boolean skipContentSymbols(ICharStream stream) {
-        return stream.incPos();
+        stream.incPos();
+        return true;
     }
 }

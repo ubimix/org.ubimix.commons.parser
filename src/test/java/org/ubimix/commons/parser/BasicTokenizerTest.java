@@ -5,6 +5,7 @@ package org.ubimix.commons.parser;
 
 import junit.framework.TestCase;
 
+import org.ubimix.commons.parser.base.DelimitedTextTokenizer;
 import org.ubimix.commons.parser.text.TextTokenizer;
 
 /**
@@ -21,8 +22,8 @@ public class BasicTokenizerTest extends TestCase {
     }
 
     protected ICharStream newCharStream(String str) {
-        return new CharStream(str);
-        // return new StringBufferCharStream(str);
+        // return new CharStream(str);
+        return new StringBufferCharStream(str);
     }
 
     protected void printToken(StreamToken token) {
@@ -44,7 +45,48 @@ public class BasicTokenizerTest extends TestCase {
         System.out.println(token + "\t" + pos + "\t'" + s + "'");
     }
 
-    public void test() throws Exception {
+    public void test() {
+        CompositeTokenizer tokenizer = new CompositeTokenizer();
+        tokenizer.addTokenizer(new DelimitedTextTokenizer("<?", ">", false));
+        tokenizer.addTokenizer(new DelimitedTextTokenizer("<!", ">", false));
+        tokenizer.addTokenizer(new TextTokenizer());
+        test(tokenizer, "a", "a");
+        test(tokenizer, "a ", "a", " ");
+        test(tokenizer, "<!b>", "<!b>");
+        test(tokenizer, "<?b>", "<?b>");
+        test(tokenizer, "<!b><?c>", "<!b>", "<?c>");
+        test(tokenizer, "<?a><!b><?c>", "<?a>", "<!b>", "<?c>");
+        test(tokenizer, "<!a><?b><!c>", "<!a>", "<?b>", "<!c>");
+        test(tokenizer, "<!b>c", "<!b>", "c");
+        test(tokenizer, "a<!b>c", "a", "<!b>", "c");
+    }
+
+    private void test(ITokenizer tokenizer, String string, String... control) {
+        ICharStream stream = newCharStream(string);
+        for (String t : control) {
+            StreamToken token = tokenizer.read(stream);
+            assertNotNull(token);
+            assertEquals(t, token.getText());
+        }
+        StreamToken token = tokenizer.read(stream);
+        assertNull(token);
+    }
+
+    private void testBasicTokenizer(ITokenizer tokenizer, String str) {
+        StringBuilder builder = new StringBuilder();
+        ICharStream stream = newCharStream(str);
+        while (true) {
+            StreamToken token = tokenizer.read(stream);
+            if (token == null) {
+                break;
+            }
+            printToken(token);
+            builder.append(token.getText());
+        }
+        assertEquals(str, builder.toString());
+    }
+
+    public void testXHTMLTokenizer() throws Exception {
         ITokenizer tokenizer = getXHTMLTokenizer();
         testBasicTokenizer(tokenizer, "–*");
         testBasicTokenizer(tokenizer, "<p>–");
@@ -63,19 +105,5 @@ public class BasicTokenizerTest extends TestCase {
             + "     style='border: 1px solid red; \r\n margin: 1em 0;'/>\n"
             + "</body>\n"
             + "</html>");
-    }
-
-    private void testBasicTokenizer(ITokenizer tokenizer, String str) {
-        StringBuilder builder = new StringBuilder();
-        ICharStream stream = newCharStream(str);
-        while (true) {
-            StreamToken token = tokenizer.read(stream);
-            if (token == null) {
-                break;
-            }
-            printToken(token);
-            builder.append(token.getText());
-        }
-        assertEquals(str, builder.toString());
     }
 }
