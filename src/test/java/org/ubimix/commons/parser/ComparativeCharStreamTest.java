@@ -8,9 +8,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
-import junit.framework.TestCase;
-
 import org.ubimix.commons.parser.stream.StreamCharLoader;
+
+import junit.framework.TestCase;
 
 /**
  * @author kotelnikov
@@ -91,7 +91,8 @@ public class ComparativeCharStreamTest extends TestCase {
         String resourceName = getPackageResourceName("test.wiki");
         InputStream input = getResourceAsStream(resourceName);
         try {
-            ICharStream first = new CharStream(new StreamCharLoader(input));
+            ICharStream first = new UnboundedCharStream(new StreamCharLoader(
+                input));
             String str = readResourceAsString(resourceName);
             ICharStream second = new CharStream(str);
             int counter = compareStreams(first, second);
@@ -109,7 +110,7 @@ public class ComparativeCharStreamTest extends TestCase {
         try {
             String str = readResourceAsString(resourceName);
             ICharStream first = new CharStream(str);
-            ICharStream second = new StringBufferCharStream(str);
+            ICharStream second = new CharStream(str);
             int counter = compareStreams(first, second);
             assertEquals(str.length(), counter);
         } finally {

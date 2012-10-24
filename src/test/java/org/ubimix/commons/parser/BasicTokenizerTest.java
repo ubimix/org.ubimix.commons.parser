@@ -23,7 +23,7 @@ public class BasicTokenizerTest extends TestCase {
 
     protected ICharStream newCharStream(String str) {
         // return new CharStream(str);
-        return new StringBufferCharStream(str);
+        return new CharStream(str);
     }
 
     protected void printToken(StreamToken token) {

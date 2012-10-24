@@ -8,12 +8,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
-import org.ubimix.commons.parser.CharStream.ICharLoader;
+import org.ubimix.commons.parser.UnboundedCharStream;
+import org.ubimix.commons.parser.UnboundedCharStream.ICharLoader;
 
 /**
  * @author kotelnikov
  */
-public class StreamCharLoader implements ICharLoader {
+public class StreamCharLoader implements UnboundedCharStream.ICharLoader {
 
     private Reader fReader;
 

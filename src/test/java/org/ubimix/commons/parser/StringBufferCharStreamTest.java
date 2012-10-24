@@ -10,6 +10,6 @@ public class StringBufferCharStreamTest extends CharStreamTest {
      */
     @Override
     protected ICharStream newCharStream(String str) {
-        return new StringBufferCharStream(str);
+        return new CharStream(str);
     }
 }
