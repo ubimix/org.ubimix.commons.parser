@@ -6,8 +6,6 @@ package org.ubimix.commons.parser;
  */
 public interface IParser<L extends IParserListener> {
 
-    ICharStream getStream();
-
     void parse(ICharStream stream, L listener);
 
     void parse(String str, L listener);

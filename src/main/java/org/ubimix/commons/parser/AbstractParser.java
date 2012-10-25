@@ -64,10 +64,6 @@ public abstract class AbstractParser<L extends IParserListener>
 
     protected abstract void doParse();
 
-    /**
-     * @see org.ubimix.commons.parser.IParser#getStream()
-     */
-    @Override
     public ICharStream getStream() {
         return fStream;
     }
