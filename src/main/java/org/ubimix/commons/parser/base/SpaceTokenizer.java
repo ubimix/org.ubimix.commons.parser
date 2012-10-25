@@ -16,6 +16,9 @@ public final class SpaceTokenizer extends SimpleTokenizer {
         if (Character.isSpaceChar(ch) && (ch != 0xA && ch != 0xD)) {
             return true;
         }
+        if (ch == '\t') {
+            return true;
+        }
         return false;
     }
 
