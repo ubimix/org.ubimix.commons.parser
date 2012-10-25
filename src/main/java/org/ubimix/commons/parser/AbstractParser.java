@@ -64,6 +64,13 @@ public abstract class AbstractParser<L extends IParserListener>
 
     protected abstract void doParse();
 
+    /**
+     * @return the currently active token
+     */
+    public StreamToken getCurrentToken() {
+        return getToken(false);
+    }
+
     public ICharStream getStream() {
         return fStream;
     }
@@ -104,10 +111,12 @@ public abstract class AbstractParser<L extends IParserListener>
         try {
             fStream = stream;
             fListener = listener;
+            fToken = null;
             doParse();
         } finally {
             fStream = null;
             fListener = null;
+            fToken = null;
         }
     }
 
